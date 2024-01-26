@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Рецепты без продукта: "{{ product_name }}"</title>
+</head>
+<body>
+    <h1>Рецепты без продукта: "{{ product_name }}" </h1>
+    <table>
+        <tr>
+            <th>Идентификатор</th>
+            <th>Название</th>
+        </tr>
+        {% for recipe in recipes %}
+        <tr>
+            <td>{{ recipe.recipe.id }}</td>
+            <td>{{ recipe.recipe.name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
