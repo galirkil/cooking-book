@@ -37,7 +37,7 @@ class RecipeWithProduct(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Рецепт'
+        verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
         unique_together = ('recipe', 'product')
 
