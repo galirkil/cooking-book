@@ -88,7 +88,7 @@ python3 manage.py migrate
 python3 manage.py createsuperuser
 ```
 
-Загрузите тестовое наполнение для базы данны:
+Загрузите тестовое наполнение для базы данных:
 
 ```bash
 python3 manage.py loaddata fixture.json
