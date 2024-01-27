@@ -82,6 +82,12 @@ pip install -r requirements.txt
 python3 manage.py migrate
 ```
 
+Создайте суперпользователя:
+
+```bash
+python3 manage.py createsuperuser
+```
+
 Загрузите тестовое наполнение для базы данны:
 
 ```bash
@@ -94,9 +100,3 @@ python3 manage.py loaddata fixture.json
 python3 manage.py runserver
 ```
 
-## Примечание
-
-Если вы загрузили фикстуру, то будет доступен суперпользователь со следующими
-реквизитами 
-
-`username/password: admin/admin`
