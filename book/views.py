@@ -1,4 +1,5 @@
 from django.db import IntegrityError
+from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 
@@ -55,8 +56,16 @@ def show_recipes_without_product(request: HttpRequest,
     and recipes which contain less than 10 grams of requested product
     """
     product = get_object_or_404(Product, id=product_id)
-    recipes = RecipeWithProduct.objects.exclude(
-        product_id=product_id, weight__gte=10
+    recipes_without_product = Recipe.objects.exclude(
+        recipewithproduct__product__id=product_id
     )
+    recipes_with_product_less_than_10_grams = Recipe.objects.filter(
+        recipewithproduct__product__id=product_id,
+        recipewithproduct__weight__lt=10
+    )
+    recipes = recipes_without_product.union(
+        recipes_with_product_less_than_10_grams
+    )
+
     return render(request, 'recipes.html',
                   {'recipes': recipes, 'product_name': product.name})
