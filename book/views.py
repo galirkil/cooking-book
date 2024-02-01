@@ -1,5 +1,5 @@
 from django.db import IntegrityError
-from django.db.models import Q
+from django.db.models import F
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 
@@ -39,14 +39,12 @@ def cook_recipe(request: HttpRequest, recipe_id: int) -> HttpResponse:
     """
     Increases 'times used' attribute for each product in requested recipe
     """
-    products_in_recipe = get_list_or_404(
-        RecipeWithProduct,
-        recipe_id=recipe_id
-    )
-    for product in products_in_recipe:
-        product.product.times_used += 1
-        product.product.save()
-    return HttpResponse('Блюдо приготовлено!', status=200)
+    products_in_recipe = Product.objects.filter(
+        recipewithproduct__recipe_id=recipe_id
+    ).update(times_used=F('times_used') + 1)
+    if products_in_recipe:
+        return HttpResponse('Блюдо приготовлено!', status=200)
+    return HttpResponse('Блюдо не найдено!', status=404)
 
 
 def show_recipes_without_product(request: HttpRequest,
